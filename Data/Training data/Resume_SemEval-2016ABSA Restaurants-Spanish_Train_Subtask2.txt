@@ -1,0 +1,15 @@
+**********Resumen de datos leídos**********
+	 Total de reseñas leídas:	627
+	 Total de parrafos leídas:	2070
+	 Total de aspectos hallados:
+		RESTAURANT:	723
+		SERVICE:	388
+		AMBIENCE:	220
+		FOOD:	707
+		DRINKS:	57
+		LOCATION:	14
+	 Total de polaridades halladas:
+		positive:	1515
+		negative:	439
+		neutral:	100
+		conflict:	57
