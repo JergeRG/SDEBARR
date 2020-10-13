@@ -7,7 +7,7 @@ def extractTree(folder):
         data = file.read()
     return ET.fromstring(data)
     
-def extractData(folder):
+def extractData(folder,col):
     tree = extractTree(folder)
     npath, nfile = path.split(folder)
     lstFile = nfile.split('.')
@@ -36,12 +36,18 @@ def extractData(folder):
             else:
                 dictPolarities[polarity] = 0
             lstPolarity.append(polarity)
-            
-        lstReview.append([rid, lstSentence, lstAspect, lstPolarity])
         
-    with open(npath + '/' + lstFile[0] + '.csv', 'w') as file:
-        writer = csv.writer(file)
-        writer.writerows(lstReview)
+        col.insert_one({
+            'ID':rid,
+            'Sentences':lstSentence,
+            'Aspectos':lstAspect,
+            'Polaridad':lstPolarity
+        })
+        #lstReview.append([rid, lstSentence, lstAspect, lstPolarity])
+        
+   # with open(npath + '/' + lstFile[0] + '.csv', 'w') as file:
+    #    writer = csv.writer(file)
+     #   writer.writerows(lstReview)
                 
     with open(npath + '/Resume_' + lstFile[0] + '.txt', 'w') as file:
         file.write('*'*10 + 'Resumen de datos leídos' +'*'*10 + '\n')
