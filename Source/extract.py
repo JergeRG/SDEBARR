@@ -21,7 +21,7 @@ def extractData(folder,col):
         lstSentence, lstAspect, lstPolarity = [], [], []
         for sentence in review.find('sentences').findall('sentence'):
             totalSentences = totalSentences + 1
-            lstSentence.append(sentence.find('text').text.replace(',' , '_'))
+            lstSentence.append(sentence.find('text').text)
         for opinion in review.find('Opinions').findall('Opinion'):
             aspect = opinion.get('category').split('#')[0]
             lstAspect.append(aspect)
@@ -43,11 +43,7 @@ def extractData(folder,col):
             'Aspectos':lstAspect,
             'Polaridad':lstPolarity
         })
-        #lstReview.append([rid, lstSentence, lstAspect, lstPolarity])
         
-   # with open(npath + '/' + lstFile[0] + '.csv', 'w') as file:
-    #    writer = csv.writer(file)
-     #   writer.writerows(lstReview)
                 
     with open(npath + '/Resume_' + lstFile[0] + '.txt', 'w') as file:
         file.write('*'*10 + 'Resumen de datos leídos' +'*'*10 + '\n')

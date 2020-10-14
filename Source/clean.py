@@ -2,28 +2,12 @@ import csv
 import re
 from os import path
 
-def cleanData(folder):
-    npath, nfile = path.split(folder)
-    lstFile = nfile.split('.')
-
-    lstReview = []
-    with open(folder) as file: 
-        reader = csv.reader(file)
-        for row in reader:
-            lst = []
-            for element in row:
-                if element[0] == '[' : 
-                     lst.append(element.strip('[]').replace("'","").split(", "))
-                else:
-                    lst.append(element)
-            lstReview.append(lst)
+def cleanData(col):
     
-    for  count, Review in enumerate(lstReview[1:], 1): 
+    for doc in col.find({}):
         lst = []
-        for sentence in Review[1]:
-            lst.append(re.sub('[^.,a-zA-ZñÑáÁéÉíÍóÓúÚ0-9. \n\.]', '', sentence.replace('_',',')))
-        lstReview[count][1] = lst
-    
-    with open(npath + '/Clean_' + lstFile[0] + '.csv', 'w') as file:
-        writer = csv.writer(file)
-        writer.writerows(lstReview)
+        for sentence in doc['Sentences']:
+            lst.append(re.sub('[^.,a-zA-ZñÑáÁéÉíÍóÓúÚ0-9. \n\.]', '', sentence))
+            
+        col.update_one({'ID':doc['ID']},{'$set':{'Limpio':lst}})
+            
