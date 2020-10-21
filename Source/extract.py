@@ -16,12 +16,14 @@ def extractData(folder,col):
     totalReviews, totalSentences  = 0, 0
     dictAspects, dictPolarities = {}, {}
     for review in tree.findall('Review'):
+        textReview = ""
         totalReviews = totalReviews + 1 
         rid = review.get('rid')
         lstSentence, lstAspect, lstPolarity = [], [], []
-        for sentence in review.find('sentences').findall('sentence'):
+        for sentence in review.find('sentences').findall('sentence'):         
             totalSentences = totalSentences + 1
             lstSentence.append(sentence.find('text').text)
+            textReview +=" "+ sentence.find('text').text
         for opinion in review.find('Opinions').findall('Opinion'):
             aspect = opinion.get('category').split('#')[0]
             lstAspect.append(aspect)
@@ -36,7 +38,7 @@ def extractData(folder,col):
             else:
                 dictPolarities[polarity] = 0
             lstPolarity.append(polarity)
-        
+        textReview = textReview[1:]
         col.insert_one({
             'ID':rid,
             'Sentences':lstSentence,
