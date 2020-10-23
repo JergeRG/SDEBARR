@@ -11,8 +11,7 @@ def extractData(folder,col):
     tree = extractTree(folder)
     npath, nfile = path.split(folder)
     lstFile = nfile.split('.')
-    
-    lstReview = [['Id', 'Sentences', 'Aspects', 'Polarities']]
+
     totalReviews, totalSentences  = 0, 0
     dictAspects, dictPolarities = {}, {}
     for review in tree.findall('Review'):
@@ -41,9 +40,10 @@ def extractData(folder,col):
         textReview = textReview[1:]
         col.insert_one({
             'ID':rid,
+            'Review':textReview,
             'Sentences':lstSentence,
-            'Aspectos':lstAspect,
-            'Polaridad':lstPolarity
+            'Aspects':lstAspect,
+            'Polarities':lstPolarity
         })
         
                 

@@ -5,9 +5,10 @@ from os import path
 def cleanData(col):
     
     for doc in col.find({}):
-        lst = []
+        lstSentences = []
+        CleanReview = re.sub('[^.,a-zA-ZñÑáÁéÉíÍóÓúÚ0-9. \n\.]', '', doc['Review'])
         for sentence in doc['Sentences']:
-            lst.append(re.sub('[^.,a-zA-ZñÑáÁéÉíÍóÓúÚ0-9. \n\.]', '', sentence))
+            lstSentences.append(re.sub('[^.,a-zA-ZñÑáÁéÉíÍóÓúÚ0-9. \n\.]', '', sentence))
             
-        col.update_one({'ID':doc['ID']},{'$set':{'Limpio':lst}})
+        col.update_one({'ID':doc['ID']},{'$set':{'CleanReview':CleanReview,'CleanSentences':lstSentences}})
             
