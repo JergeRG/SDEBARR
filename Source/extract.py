@@ -24,7 +24,7 @@ def extractData(folder,col):
             lstSentence.append(sentence.find('text').text)
             textReview +=" "+ sentence.find('text').text
         for opinion in review.find('Opinions').findall('Opinion'):
-            aspect = opinion.get('category').split('#')[0]
+            aspect = (opinion.get('category').split('#')[0], opinion.get('category').split('#')[1]) 
             lstAspect.append(aspect)
             if aspect in dictAspects:
                 dictAspects[aspect] = dictAspects[aspect] + 1 
